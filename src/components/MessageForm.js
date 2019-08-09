@@ -9,7 +9,7 @@ export default class MessageFrom extends React.Component {
     event.preventDefault()
     // console.log('state.message', this.state.message)
     const response = await request
-      .post('http://localhost:5000/message')
+      .post('https://pure-atoll-24949.herokuapp.com/message')
       .send({ 
         message: this.state.message ,
         user: this.props.user
