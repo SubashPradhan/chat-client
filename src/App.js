@@ -25,12 +25,12 @@ class App extends React.Component {
       .props
       .messages
       .map((message, index) => <p key={index}>
-        {message.text}
+        {message.user}: {message.text}
       </p>)
 
     return <main>
       <MessageFrom user={this.props.user}/>
-      <UserForm />
+      <UserForm user={this.props.user}/>
       {messages}
     </main>
   }

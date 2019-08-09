@@ -18,14 +18,11 @@ export default class MessageFrom extends React.Component {
 
     this.setState({ message: '' })
     console.log("response", response)
-
   }
 
   onChange = (event) => {
     const { value } = event.target //get text from input form
-
     this.setState({ message: value })
-
   }
 
   render() {  

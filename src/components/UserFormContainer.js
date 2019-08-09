@@ -5,7 +5,8 @@ export default function MessageFormContainer(props){
   const {
     onSubmit,
     value,
-    onChange
+    onChange,
+    user
   } = props
 
     return <div>
@@ -13,7 +14,8 @@ export default function MessageFormContainer(props){
       <form onSubmit={onSubmit}>
         <input type='text'
          value={value}
-          onChange={onChange}>
+          onChange={onChange}
+          placeholder={user}>
           </input>
         <button type='submit'>Send</button>
       </form>
