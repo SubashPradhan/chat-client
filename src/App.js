@@ -4,11 +4,11 @@ import * as request from 'superagent'
 
 class App extends React.Component {
   state = {
-    message:'',
-    messages: []
+    message:'', //user writing right now
+    messages: []  //saved messages
   }
 
-  source = new EventSource('http://localhost:5000/stream')
+  source = new EventSource('http://localhost:5000/stream')  //Listen to the stream
   componentDidMount() {
     this.source.onmessage = (event) => {
       
@@ -31,7 +31,7 @@ class App extends React.Component {
   }
 
   onChange =(event) => {
-    const {value} =event.target
+    const {value} =event.target //get text from input form
 
     this.setState({message: value})
 
@@ -42,7 +42,7 @@ class App extends React.Component {
       .state
       .messages
       .map(
-        (message, index) => <p key={index}>{message} </p>
+        (message, index) => <p key={index}>{message.text} </p>
       )
     const form = <form onSubmit={this.onSubmit}>
       <input type='text' value={this.state.message} onChange={this.onChange}></input>
