@@ -1,57 +1,50 @@
 import React from 'react';
 import './App.css';
-import * as request from 'superagent'
+import { allMessages } from './actions'
+import { connect } from 'react-redux'
+import MessageFrom from './components/MessageForm'
+
 
 class App extends React.Component {
-  state = {
-    message:'', //user writing right now
-    messages: []  //saved messages
-  }
+  state = { message: '' }
 
   source = new EventSource('http://localhost:5000/stream')  //Listen to the stream
   componentDidMount() {
     this.source.onmessage = (event) => {
-      
+
       const messages = JSON.parse(event.data)
 
-      this.setState({ messages})
+      this.props.allMessages(messages)
       console.log("event test", event)
     }
-  }
-  onSubmit = async (event) => {
-    event.preventDefault()
-    // console.log('state.message', this.state.message)
-    const response = await request
-    .post('http://localhost:5000/message')
-    .send({message: this.state.message})
-
-    this.setState({ message: ''})
-    console.log("response", response)
-
-  }
-
-  onChange =(event) => {
-    const {value} =event.target //get text from input form
-
-    this.setState({message: value})
-
   }
 
   render() {
     const messages = this
-      .state
+      .props
       .messages
-      .map(
-        (message, index) => <p key={index}>{message.text} </p>
-      )
-    const form = <form onSubmit={this.onSubmit}>
-      <input type='text' value={this.state.message} onChange={this.onChange}></input>
-      <button type='submit'>Send</button>
-    </form>
+      .map((message, index) => <p key={index}>
+        {message.text}
+      </p>)
+
     return <main>
-      {form}
+      <MessageFrom />
       {messages}
     </main>
   }
 }
-export default App;
+function mapStateToProps(state) {
+  return {
+    messages: state.messages
+  }
+}
+
+const mapDispatchToProps = {
+  allMessages
+
+}
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(App)
