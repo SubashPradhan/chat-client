@@ -1,5 +1,6 @@
 import React from 'react'
 import * as request from 'superagent'
+import MessageFormContainer from './MessageFormContainer'
 
 export default class MessageFrom extends React.Component {
   state = { message: "" }
@@ -9,7 +10,11 @@ export default class MessageFrom extends React.Component {
     // console.log('state.message', this.state.message)
     const response = await request
       .post('http://localhost:5000/message')
-      .send({ message: this.state.message })
+      .send({ 
+        message: this.state.message ,
+        user: this.props.user
+      })
+
 
     this.setState({ message: '' })
     console.log("response", response)
@@ -23,14 +28,12 @@ export default class MessageFrom extends React.Component {
 
   }
 
-  render() {
-    return <div>
-      <h3>New Messages</h3>
-      <form onSubmit={this.onSubmit}>
-        <input type='text' value={this.state.message} onChange={this.onChange}></input>
-        <button type='submit'>Send</button>
-      </form>
-    </div>
+  render() {  
+    return <MessageFormContainer
+    onSubmit={this.onSubmit}
+    value={this.state.message}
+    onChange={this.onChange}
+    />
   }
 
 }

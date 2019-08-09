@@ -3,6 +3,7 @@ import './App.css';
 import { allMessages } from './actions'
 import { connect } from 'react-redux'
 import MessageFrom from './components/MessageForm'
+import UserForm from './components/UserForm'
 
 
 class App extends React.Component {
@@ -28,14 +29,16 @@ class App extends React.Component {
       </p>)
 
     return <main>
-      <MessageFrom />
+      <MessageFrom user={this.props.user}/>
+      <UserForm />
       {messages}
     </main>
   }
 }
 function mapStateToProps(state) {
   return {
-    messages: state.messages
+    messages: state.messages,
+    user: state.user
   }
 }
 
